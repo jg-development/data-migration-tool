@@ -392,7 +392,7 @@ class Data implements StageInterface, RollbackInterface
             $recordTransformer->transform($sourceRecord, $destinationRecord);
             $recordsToSave->addRecord($destinationRecord);
         }
-        $this->saveRecords($destinationDocument, $recordsToSave);
+        $this->saveRecords($destinationDocument, $recordsToSave, true);
     }
 
     /**
@@ -589,12 +589,12 @@ class Data implements StageInterface, RollbackInterface
      * @param Record\Collection|array $recordsToSave
      * @return void
      */
-    private function saveRecords($document, $recordsToSave)
+    private function saveRecords($document, $recordsToSave, $updateOnDuplicate = false)
     {
         if (is_object($document)) {
             $document = $document->getName();
         }
-        $this->destination->saveRecords($document, $recordsToSave);
+        $this->destination->saveRecords($document, $recordsToSave, $updateOnDuplicate);
     }
 
     /**
